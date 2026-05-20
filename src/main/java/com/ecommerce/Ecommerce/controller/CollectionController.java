@@ -1,6 +1,7 @@
 package com.ecommerce.Ecommerce.controller;
 
 
+import com.ecommerce.Ecommerce.dto.CollectionProductsResponseDto;
 import com.ecommerce.Ecommerce.dto.CreateCollectionDto;
 import com.ecommerce.Ecommerce.entity.Collection;
 import com.ecommerce.Ecommerce.service.CollectionService;
@@ -41,6 +42,23 @@ public class CollectionController {
     @Operation(summary = "Add variants by facet value")
     public void addByFacet(@PathVariable String id , @PathVariable String facetValueId){
         collectionService.addVariantsByFacetValue(UUID.fromString(id), UUID.fromString(facetValueId));
+    }
+
+    @PostMapping("/{id}/products/{productId}")
+    @Operation(summary = "Add a product to a collection")
+   public void addByProduct(@PathVariable String id , @PathVariable String productId){
+        collectionService.addProductToCollection(UUID.fromString(id), UUID.fromString(productId));
+   }
+
+    @GetMapping("/{id}/products")
+    @Operation(summary = "Get products in a collection")
+    public CollectionProductsResponseDto getProductsInCollection(@PathVariable String id,
+                                                                 @RequestParam(defaultValue = "0") int page,
+                                                                 @RequestParam(defaultValue = "20") int size,
+                                                                 @RequestParam(defaultValue = "name") String sortBy,
+                                                                 @RequestParam(defaultValue = "asc") String sortDir) {
+        UUID collectionId = UUID.fromString(id);
+        return collectionService.getCollectionProducts(collectionId, page, size, sortBy, sortDir);
     }
 
 }
