@@ -3,6 +3,7 @@ package com.ecommerce.Ecommerce.controller;
 
 import com.ecommerce.Ecommerce.dto.CollectionProductsResponseDto;
 import com.ecommerce.Ecommerce.dto.CreateCollectionDto;
+import com.ecommerce.Ecommerce.dto.PageResponse;
 import com.ecommerce.Ecommerce.entity.Collection;
 import com.ecommerce.Ecommerce.service.CollectionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,10 +21,20 @@ import java.util.UUID;
 public class CollectionController {
     private final CollectionService collectionService;
 
+//    @GetMapping
+//    @Operation(summary = "Get all Collections")
+//    public List<Collection> getCollections() {
+//        return collectionService.list();
+//    }
+
     @GetMapping
-    @Operation(summary = "Get all Collections")
-    public List<Collection> getCollections() {
-        return collectionService.list();
+    @Operation(summary = "Get all collections with pagiation")
+    public PageResponse<Collection> list(@RequestParam(defaultValue = "0") int page ,
+                                         @RequestParam(defaultValue = "10") int size,
+                                         @RequestParam(defaultValue = "name") String sortBy,
+                                         @RequestParam(defaultValue = "asc") String sortDir
+                                         ){
+        return collectionService.listWithPagination(page,size, String.valueOf(sortBy), String.valueOf(sortDir));
     }
 
     @PostMapping()

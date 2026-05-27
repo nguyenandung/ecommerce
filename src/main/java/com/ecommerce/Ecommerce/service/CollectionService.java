@@ -11,6 +11,7 @@ import com.ecommerce.Ecommerce.entity.ProductVariant;
 import com.ecommerce.Ecommerce.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -18,17 +19,23 @@ import java.util.*;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CollectionService {
+public class CollectionService  implements BaseService<Collection,String >{
     private final CollectionRepository collectionRepository;
     private final ProductVariantRepository productVariantRepository;
     private final ProductRepository productRepository;
     private final FacetValueRepository facetValueRepository;
 
 
-
-    public List<Collection> list() {
-        return collectionRepository.findAll();
+    @Override
+    public JpaRepository<Collection, String> getRepository(){
+        return collectionRepository;
     }
+
+//    public List<Collection> list() {
+//        return collectionRepository.findAll();
+//    }
+
+
 
     public Collection createCollection(String name, String slug , String parentId) {
         Collection collection = new Collection();
