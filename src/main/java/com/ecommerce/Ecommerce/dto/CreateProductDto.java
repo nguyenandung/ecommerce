@@ -1,10 +1,16 @@
 package com.ecommerce.Ecommerce.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-@RequiredArgsConstructor
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateProductDto {
     public String name;
 

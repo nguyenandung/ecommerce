@@ -1,5 +1,6 @@
 package com.ecommerce.Ecommerce.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,34 +8,38 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+
 @Entity
-@Table(name = "cart_items")
+@Table(name = "order_items", indexes = {
+
+        @Index(columnList = "orderId"),
+        @Index(columnList = "shopId"),
+        @Index(columnList = "productId"),
+        @Index(columnList = "variantId")
+}
+
+)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartItemEntity extends  BaseEntity{
+public class OrderItemEntity extends BaseEntity{
     @ManyToOne
-    @JoinColumn(name="cart_id")
+    @JoinColumn(name = "order_id")
     @JsonIgnore
-    private CartEntity cart;
+    private OrderEntity order;
 
-    @ManyToOne
-    @JoinColumn(name="product_id")
-    private Product product;
+    private String productId;
 
-    @ManyToOne
-    @JoinColumn(name="variant_id")
-    private ProductVariant variant;
-
-    @ManyToOne
-    @JoinColumn(name="shop_id")
-    private ShopEntity shop;
+    private String variantId;
 
     private String currency;
 
     private BigDecimal price;
 
     private int quantity;
+
+
+
 
 
 }
